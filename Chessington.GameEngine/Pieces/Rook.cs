@@ -15,14 +15,20 @@ namespace Chessington.GameEngine.Pieces
             int[][] unitVectors = { new[] { 1, 0 }, new[] { 0, 1 }, new[] { -1, 0 }, new[] { 0, -1 } };
 
             var currentSquare = board.FindPiece(this);
-            for(int i = 1; i < 8; i++)
+
+            foreach(int[] unitVector in unitVectors)
             {
-                foreach(int[] unitVector in unitVectors)
+                bool hasFoundPieceOrBoundary = false;
+                int magnitude = 0;
+
+                while (hasFoundPieceOrBoundary == false)
                 {
-                    int candidateRow = currentSquare.Row + i * unitVector[0];
-                    int candidateCol = currentSquare.Col + i * unitVector[1];
+                    magnitude++;
+                    int candidateRow = currentSquare.Row + magnitude * unitVector[0];
+                    int candidateCol = currentSquare.Col + magnitude * unitVector[1];
                     Square candidateSquare = new Square(candidateRow, candidateCol);
-                    if (candidateSquare.isOnBoard()) rookAvailableMoves.Add(candidateSquare);
+                    if (candidateSquare.isOnBoard() && candidateSquare.isEmpty(board)) rookAvailableMoves.Add(candidateSquare);
+                    else hasFoundPieceOrBoundary = true;
                 }
             }
 

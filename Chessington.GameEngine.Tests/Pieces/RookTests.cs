@@ -32,6 +32,7 @@ namespace Chessington.GameEngine.Tests.Pieces
         }
 
         [Test]
+
         public void Rook_CannotMoveOffTheBoard()
         {
             var board = new Board(Player.White);
@@ -41,6 +42,31 @@ namespace Chessington.GameEngine.Tests.Pieces
             var moves = rook.GetAvailableMoves(board).ToList();
 
             moves.Should().HaveCount(14);
+        }
+ 
+        public void Rook_CannnotPassThrough_OpposingPieces()
+        {
+            var board = new Board();
+            var rook = new Rook(Player.White);
+            board.AddPiece(Square.At(4, 4), rook);
+            var pieceToTake = new Pawn(Player.Black);
+            board.AddPiece(Square.At(4, 6), pieceToTake);
+
+            var moves = rook.GetAvailableMoves(board);
+            moves.Should().NotContain(Square.At(4, 7));
+        }
+
+        [Test]
+        public void Rook_CannnotPassThrough_FriendlyPieces()
+        {
+            var board = new Board();
+            var rook = new Rook(Player.White);
+            board.AddPiece(Square.At(4, 4), rook);
+            var friendlyPiece = new Pawn(Player.White);
+            board.AddPiece(Square.At(4, 6), friendlyPiece);
+
+            var moves = rook.GetAvailableMoves(board);
+            moves.Should().NotContain(Square.At(4, 7));
         }
     }
 }
