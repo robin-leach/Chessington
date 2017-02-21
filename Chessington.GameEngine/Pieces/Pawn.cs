@@ -27,12 +27,15 @@ namespace Chessington.GameEngine.Pieces
             }
 
             Square oneSquareAway = new Square(oneRowAway, currentSquare.Col);
-            if(oneSquareAway.isOnBoard()) pawnAvailableMoves.Add(oneSquareAway);
-
-            if (!hasMoved)
+            if (oneSquareAway.isOnBoard() && oneSquareAway.isEmpty(board))
             {
-                Square twoSquaresAway = new Square(twoRowsAway, currentSquare.Col);
-                if(twoSquaresAway.isOnBoard()) pawnAvailableMoves.Add(twoSquaresAway);
+                pawnAvailableMoves.Add(oneSquareAway);
+
+                if (!hasMoved)
+                {
+                    Square twoSquaresAway = new Square(twoRowsAway, currentSquare.Col);
+                    if (twoSquaresAway.isOnBoard() && twoSquaresAway.isEmpty(board)) pawnAvailableMoves.Add(twoSquaresAway);
+                }
             }
 
             return pawnAvailableMoves;

@@ -55,5 +55,12 @@
             if (Row < 0 || Row > 7 || Col < 0 || Col > 7) return false;
             else return true;
         }
+
+        public bool isEmpty(Board board)
+        {
+            if (board.GetPiece(this) == null) return true;
+            else return false;
+
+        }
     }
 }
