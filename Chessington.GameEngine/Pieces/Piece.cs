@@ -40,7 +40,9 @@ namespace Chessington.GameEngine.Pieces
                     int candidateRow = currentSquare.Row + magnitude * unitVector[0];
                     int candidateCol = currentSquare.Col + magnitude * unitVector[1];
                     Square candidateSquare = new Square(candidateRow, candidateCol);
-                    if (candidateSquare.isOnBoard() && candidateSquare.isEmpty(board)) availableMoves.Add(candidateSquare);
+
+                    if (candidateSquare.isOnBoard() && candidateSquare.isEmpty(board))
+                        availableMoves.Add(candidateSquare);
                     else hasFoundPieceOrBoundary = true;
                 }
             }
