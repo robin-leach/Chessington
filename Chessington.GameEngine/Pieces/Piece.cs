@@ -33,7 +33,16 @@ namespace Chessington.GameEngine.Pieces
                 {"upleft", "-1,-1" },
                 {"upright", "-1,1" },
                 {"downleft", "1,-1" },
-                {"downright", "1,1" }
+                {"downright", "1,1" },
+                {"upupleft", "-2,-1" },
+                {"upleftleft", "-1,-2" },
+                {"upupright", "-2,1" },
+                {"uprightright", "-1,2" },
+                {"downdownleft", "2,-1" },
+                {"downleftleft", "1,-2" },
+                {"downdownright", "2,1" },
+                {"downrightright", "1,2" }
+
             };
 
         public int[] convertDirectionToUnitVector(string directionAsWord)

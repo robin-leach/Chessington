@@ -10,22 +10,23 @@ namespace Chessington.GameEngine.Pieces
 
         public override IEnumerable<Square> GetAvailableMoves(Board board)
         {
-            List<Square> kingAvailableMoves = new List<Square>();
-
-            int[][] unitVectors = { new[] { -1, -1 }, new[] { -1, 0 }, new[] { -1, 1 }, new[] { 0, -1 } ,
-            new [] {0, 1 }, new[] {1, -1 }, new[] {1, 0 }, new[] {1,1 } };
-
             var currentSquare = board.FindPiece(this);
+
+            List<Square> availableMoves = new List<Square>();
+
+            string[] possibleMovements = { "up", "down", "left", "right", "upleft", "upright", "downleft", "downright" };
+            List<int[]> unitVectors = new List<int[]>();
+            foreach (string direction in possibleMovements) unitVectors.Add(convertDirectionToUnitVector(direction));
+
             foreach (int[] unitVector in unitVectors)
             {
                 int candidateRow = currentSquare.Row + unitVector[0];
                 int candidateCol = currentSquare.Col + unitVector[1];
                 Square candidateSquare = new Square(candidateRow, candidateCol);
-                if (candidateSquare.isOnBoard()) kingAvailableMoves.Add(candidateSquare);
+                if (candidateSquare.isOnBoard() && candidateSquare.isEmpty(board)) availableMoves.Add(candidateSquare);
             }
 
-
-            return kingAvailableMoves;
+            return availableMoves;
         }
     }
 }
