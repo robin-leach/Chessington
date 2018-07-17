@@ -31,10 +31,11 @@ namespace Chessington.GameEngine.Pieces
             var currentSquare = board.FindPiece(this);
             foreach (int[] unitVector in unitVectors)
             {
-                bool hasFoundPieceOrBoundary = false;
+                bool hasFoundPiece = false;
+                bool hasFoundBoundary = false;
                 int magnitude = 0;
 
-                while (hasFoundPieceOrBoundary == false)
+                while (!hasFoundPiece && !hasFoundBoundary)
                 {
                     magnitude++;
                     int candidateRow = currentSquare.Row + magnitude * unitVector[0];
@@ -43,7 +44,13 @@ namespace Chessington.GameEngine.Pieces
 
                     if (candidateSquare.isOnBoard() && candidateSquare.isEmpty(board))
                         availableMoves.Add(candidateSquare);
-                    else hasFoundPieceOrBoundary = true;
+                    else if (!candidateSquare.isOnBoard()) hasFoundBoundary = true;
+                    else
+                    {
+                        if (board.GetPiece(candidateSquare).Player != this.Player)
+                            availableMoves.Add(candidateSquare);
+                        hasFoundPiece = true;
+                    }
                 }
             }
 
