@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Chessington.GameEngine.Pieces;
 using FluentAssertions;
 using NUnit.Framework;
@@ -63,6 +64,17 @@ namespace Chessington.GameEngine.Tests.Pieces
 
             //There are 27 valid lateral and diagonal moves. We need to make sure that no other moves are available.
             moves.Should().HaveCount(27);
+        }
+
+        public void Queen_CannotMoveOffTheBoard()
+        {
+            var board = new Board(Player.White);
+            var queen = new Queen(Player.White);
+            board.AddPiece(Square.At(0, 0), queen);
+
+            var moves = queen.GetAvailableMoves(board).ToList();
+
+            moves.Should().HaveCount(21);
         }
     }
 }
