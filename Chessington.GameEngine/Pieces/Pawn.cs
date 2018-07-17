@@ -12,14 +12,27 @@ namespace Chessington.GameEngine.Pieces
         {
             List<Square> pawnAvailableMoves = new List<Square>();
             var currentSquare = board.FindPiece(this);
-            int adjacentRow, adjacentCol;
-            adjacentCol = currentSquare.Col;
+            int oneRowAway, twoRowsAway;
 
-            if (base.Player == Player.Black) adjacentRow = currentSquare.Row + 1;
-            else adjacentRow = currentSquare.Row - 1;
+            if (base.Player == Player.Black)
+            {
+                oneRowAway = currentSquare.Row + 1;
+                twoRowsAway = currentSquare.Row + 2;
+            }
+            else
+            {
+                oneRowAway = currentSquare.Row - 1;
+                twoRowsAway = currentSquare.Row - 2;
+            }
 
-            Square adjacentSquare = new Square(adjacentRow, adjacentCol);
-            pawnAvailableMoves.Add(adjacentSquare);
+            Square oneSquareAway = new Square(oneRowAway, currentSquare.Col);
+            pawnAvailableMoves.Add(oneSquareAway);
+
+            if (!hasMoved)
+            {
+                Square twoSquaresAway = new Square(twoRowsAway, currentSquare.Col);
+                pawnAvailableMoves.Add(twoSquaresAway);
+            }
 
             return pawnAvailableMoves;
         }
