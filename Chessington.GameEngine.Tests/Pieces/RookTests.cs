@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Chessington.GameEngine.Pieces;
 using FluentAssertions;
 using NUnit.Framework;
@@ -28,6 +29,18 @@ namespace Chessington.GameEngine.Tests.Pieces
             expectedMoves.RemoveAll(s => s == Square.At(4, 4));
 
             moves.Should().Contain(expectedMoves);
+        }
+
+        [Test]
+        public void Rook_CannotMoveOffTheBoard()
+        {
+            var board = new Board(Player.White);
+            var rook = new Rook(Player.White);
+            board.AddPiece(Square.At(0, 0), rook);
+
+            var moves = rook.GetAvailableMoves(board).ToList();
+
+            moves.Should().HaveCount(14);
         }
     }
 }
