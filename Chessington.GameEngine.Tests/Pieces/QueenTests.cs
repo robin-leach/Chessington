@@ -66,6 +66,7 @@ namespace Chessington.GameEngine.Tests.Pieces
             moves.Should().HaveCount(27);
         }
 
+        [Test]
         public void Queen_CannotMoveOffTheBoard()
         {
             var board = new Board(Player.White);
