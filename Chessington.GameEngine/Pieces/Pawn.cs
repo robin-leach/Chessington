@@ -11,6 +11,7 @@ namespace Chessington.GameEngine.Pieces
         public override IEnumerable<Square> GetAvailableMoves(Board board)
         {
             List<Square> pawnAvailableMoves = new List<Square>();
+
             var currentSquare = board.FindPiece(this);
             int oneRowAway, twoRowsAway;
 
@@ -26,12 +27,12 @@ namespace Chessington.GameEngine.Pieces
             }
 
             Square oneSquareAway = new Square(oneRowAway, currentSquare.Col);
-            pawnAvailableMoves.Add(oneSquareAway);
+            if(oneSquareAway.isOnBoard()) pawnAvailableMoves.Add(oneSquareAway);
 
             if (!hasMoved)
             {
                 Square twoSquaresAway = new Square(twoRowsAway, currentSquare.Col);
-                pawnAvailableMoves.Add(twoSquaresAway);
+                if(twoSquaresAway.isOnBoard()) pawnAvailableMoves.Add(twoSquaresAway);
             }
 
             return pawnAvailableMoves;

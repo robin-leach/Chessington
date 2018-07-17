@@ -49,5 +49,11 @@
         {
             return string.Format("Row {0}, Col {1}", Row, Col);
         }
+
+        public bool isOnBoard()
+        {
+            if (Row < 0 || Row > 7 || Col < 0 || Col > 7) return false;
+            else return true;
+        }
     }
 }

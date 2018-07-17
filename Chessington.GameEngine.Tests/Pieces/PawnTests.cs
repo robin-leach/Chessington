@@ -83,5 +83,30 @@ namespace Chessington.GameEngine.Tests.Pieces
             moves.Should().HaveCount(1);
             moves.Should().Contain(square => square.Equals(Square.At(7, 2)));
         }
+
+        [Test]
+        public void BlackPawns_CannotMoveOffTheBoard()
+        {
+            var board = new Board(Player.Black);
+            var pawn = new Pawn(Player.Black);
+            board.AddPiece(Square.At(7,2), pawn);
+
+            var moves = pawn.GetAvailableMoves(board).ToList();
+
+            moves.Should().HaveCount(0);
+        }
+
+        [Test]
+        public void WhitePawns_CannotMoveOffTheBoard()
+        {
+            var board = new Board(Player.White);
+            var pawn = new Pawn(Player.White);
+            board.AddPiece(Square.At(0, 2), pawn);
+
+            var moves = pawn.GetAvailableMoves(board).ToList();
+
+            moves.Should().HaveCount(0);
+        }
+
     }
 }
