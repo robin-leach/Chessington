@@ -2,8 +2,8 @@
 {
     public struct Square
     {
-        public readonly int Row;
-        public readonly int Col;
+        public int Row;
+        public int Col;
 
         public Square(int row, int col)
         {

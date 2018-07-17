@@ -24,34 +24,57 @@ namespace Chessington.GameEngine.Pieces
             hasMoved = true;
         }
 
-        public List<Square> identifyFreeSquaresGivenUnitVectors (Board board, int[][] unitVectors)
+        IDictionary<string, string> directions = new Dictionary<string, string>()
+            {
+                {"up", "-1,0" },
+                {"down", "1,0" },
+                {"left", "0,-1" },
+                {"right", "0,1" },
+                {"upleft", "-1,-1" },
+                {"upright", "-1,1" },
+                {"downleft", "1,-1" },
+                {"downright", "1,1" }
+            };
+
+        public int[] convertDirectionToUnitVector(string directionAsWord)
+        {
+            string directionAsString;
+            directions.TryGetValue(directionAsWord, out directionAsString);
+            int[] directionAsArray = directionAsString.Split(',').Select(str => int.Parse(str)).ToArray();
+            return directionAsArray;
+        }
+
+
+        public List<Square> IdentifyFreeSquares (Board board, List<int[]> unitVectors)
         {
             List<Square> availableMoves = new List<Square>();
 
             var currentSquare = board.FindPiece(this);
             foreach (int[] unitVector in unitVectors)
             {
-                bool hasFoundPiece = false;
-                bool hasFoundBoundary = false;
-                int magnitude = 0;
+                List<Square> squaresInLine = new List<Square>();
 
-                while (!hasFoundPiece && !hasFoundBoundary)
+                int candidateRow = currentSquare.Row + unitVector[0];
+                int candidateCol = currentSquare.Col + unitVector[1];
+                Square candidateSquare = new Square(candidateRow, candidateCol);
+
+                while(candidateSquare.isOnBoard())
                 {
-                    magnitude++;
-                    int candidateRow = currentSquare.Row + magnitude * unitVector[0];
-                    int candidateCol = currentSquare.Col + magnitude * unitVector[1];
-                    Square candidateSquare = new Square(candidateRow, candidateCol);
+                    squaresInLine.Add(candidateSquare);
+                    candidateSquare.Row += unitVector[0];
+                    candidateSquare.Col += unitVector[1];
+                }
 
-                    if (candidateSquare.isOnBoard() && candidateSquare.isEmpty(board))
-                        availableMoves.Add(candidateSquare);
-                    else if (!candidateSquare.isOnBoard()) hasFoundBoundary = true;
+                foreach(Square square in squaresInLine)
+                {
+                    if (square.isEmpty(board)) availableMoves.Add(square);
                     else
                     {
-                        if (board.GetPiece(candidateSquare).Player != this.Player)
-                            availableMoves.Add(candidateSquare);
-                        hasFoundPiece = true;
+                        if (board.GetPiece(square).Player != this.Player) availableMoves.Add(square);
+                        break;
                     }
                 }
+
             }
 
             return availableMoves;

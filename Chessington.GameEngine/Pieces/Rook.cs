@@ -10,8 +10,10 @@ namespace Chessington.GameEngine.Pieces
 
         public override IEnumerable<Square> GetAvailableMoves(Board board)
         {
-            int[][] unitVectors = { new[] { 1, 0 }, new[] { 0, 1 }, new[] { -1, 0 }, new[] { 0, -1 } };
-            return identifyFreeSquaresGivenUnitVectors(board, unitVectors);
+            string[] possibleMovements = { "up", "down", "left", "right"};
+            List<int[]> unitVectors = new List<int[]>();
+            foreach (string direction in possibleMovements) unitVectors.Add(convertDirectionToUnitVector(direction));
+            return IdentifyFreeSquares(board, unitVectors);
         }
     }
 }
