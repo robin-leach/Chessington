@@ -26,7 +26,6 @@ namespace Chessington.GameEngine.Pieces
                 }
             }
 
-
             return rookAvailableMoves;
         }
     }

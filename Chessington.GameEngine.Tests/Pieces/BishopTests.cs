@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Chessington.GameEngine.Pieces;
 using FluentAssertions;
+using System.Linq;
 using NUnit.Framework;
 
 namespace Chessington.GameEngine.Tests.Pieces
@@ -30,7 +31,7 @@ namespace Chessington.GameEngine.Tests.Pieces
             //Get rid of our starting location.
             expectedMoves.RemoveAll(s => s == Square.At(4, 4));
 
-            moves.ShouldAllBeEquivalentTo(expectedMoves);
+            moves.Should().BeEquivalentTo(expectedMoves);
         }
     }
 }
